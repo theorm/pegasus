@@ -120,7 +120,7 @@ if adhoc_csv_reverse is not None:
           adhoc_csv_reverse,
           [tf.string, tf.string],
           header=True,
-          select_cols=[2,1]
+          select_cols=[1,2]
       )
 
       # we assume it's not too big.
@@ -138,7 +138,7 @@ if adhoc_csv_reverse is not None:
     def transform(self, dataset):
       return dataset.map(
           lambda d: {
-              "inputs": d[0],
-              "targets": d[1],
+              "inputs": d[1],
+              "targets": d[0],
               "supervised": tf.constant(self.is_supervised)
           })
