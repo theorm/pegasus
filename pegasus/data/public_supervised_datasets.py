@@ -124,7 +124,7 @@ if adhoc_csv_reverse is not None:
       )
 
       # we assume it's not too big.
-      length = len(list(dataset.as_numpy_iterator()))
+      length = len(list(tfds.as_numpy(dataset)))
 
       if split == "train":
         num_examples = length * 0.9
