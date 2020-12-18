@@ -106,7 +106,7 @@ class RedditTifuDataset(PublicSupervisedTFDSDataset):
   
 import os
 
-adhoc_csv_reverse = os.environ['ADHOC_CSV_REVERSE']
+adhoc_csv_reverse = os.environ.get('ADHOC_CSV_REVERSE')
 
 if adhoc_csv_reverse is not None:
   print(f'registering "adhoc_csv_reverse" dataset that will read "{adhoc_csv_reverse}" file.')
