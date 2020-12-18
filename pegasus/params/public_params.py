@@ -295,3 +295,17 @@ def billsum_transformer(param_overrides):
           "learning_rate": 0.0001,
           "batch_size": 8,
       }, param_overrides)
+
+@registry.register("custom_64_short_transformer")
+def billsum_transformer(param_overrides):
+  return transformer_params(
+      {
+          "train_pattern": "tfds_transformed:adhoc-train",
+          "dev_pattern": "tfds_transformed:adhoc-validation",
+          "test_pattern": "tfds_transformed:adhoc-test",
+          "max_input_len": 64,
+          "max_output_len": 64,
+          "train_steps": 180000,
+          "learning_rate": 0.0001,
+          "batch_size": 8,
+      }, param_overrides)
