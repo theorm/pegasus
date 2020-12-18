@@ -137,8 +137,8 @@ if adhoc_csv_reverse is not None:
 
     def transform(self, dataset):
       return dataset.map(
-          lambda d: {
-              "inputs": d[1],
-              "targets": d[0],
+          lambda a, b: {
+              "inputs": b,
+              "targets": a,
               "supervised": tf.constant(self.is_supervised)
           })
