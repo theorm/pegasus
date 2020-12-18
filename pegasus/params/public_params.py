@@ -296,13 +296,13 @@ def billsum_transformer(param_overrides):
           "batch_size": 8,
       }, param_overrides)
 
-@registry.register("custom_64_short_transformer")
+@registry.register("adhoc_csv_reverse_64_short_transformer")
 def billsum_transformer(param_overrides):
   return transformer_params(
       {
-          "train_pattern": "tfds_transformed:adhoc-train",
-          "dev_pattern": "tfds_transformed:adhoc-validation",
-          "test_pattern": "tfds_transformed:adhoc-test",
+          "train_pattern": "tfds_transformed:adhoc_csv_reverse-train",
+          "dev_pattern": "tfds_transformed:adhoc_csv_reverse-validation",
+          "test_pattern": "tfds_transformed:adhoc_csv_reverse-test",
           "max_input_len": 64,
           "max_output_len": 64,
           "train_steps": 180000,
