@@ -102,3 +102,43 @@ class RedditTifuDataset(PublicSupervisedTFDSDataset):
 
   def load(self, build, split, shuffle):
     return self._split_train_80_10_10(build, split, shuffle)
+
+  
+import os
+
+adhoc_csv_reverse = os.environ['ADHOC_CSV_REVERSE']
+
+if adhoc_csv_reverse is not None:
+  print(f'registering "adhoc_csv_reverse" dataset that will read "{adhoc_csv_reverse}" file.')
+
+  @datasets.register("adhoc_csv_reverse")
+  class AdhocCsvDataset(PublicSupervisedTFDSDataset):
+    """Newsroom, Abstract summaries only."""
+
+    def load(self, build, split, shuffle):
+      dataset = tf.data.experimental.CsvDataset(
+          adhoc_csv_reverse,
+          [tf.string, tf.string],
+          header=True,
+          select_cols=[2,1]
+      )
+
+      # we assume it's not too big.
+      length = len(list(dataset.as_numpy_iterator()))
+
+      if split == "train":
+        num_examples = length * 0.9
+      elif split == "validation":
+        num_examples = length * 0.1
+      else:
+        num_examples = length
+      return dataset, num_examples
+
+
+    def transform(self, dataset):
+      return dataset.map(
+          lambda d: {
+              "inputs": d[0],
+              "targets": d[1],
+              "supervised": tf.constant(self.is_supervised)
+          })
